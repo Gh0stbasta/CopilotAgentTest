@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App - TypeScript & SQLite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .api-info {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .endpoint {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: white;
+            border-left: 4px solid #007bff;
+        }
+        .method {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo App - REST API</h1>
+    <p>Welcome to the Todo App! The REST API is now available.</p>
+    
+    <div class="api-info">
+        <h2>Available API Endpoints:</h2>
+        
+        <div class="endpoint">
+            <div class="method">GET /api/todos</div>
+            <div>Retrieve all todos</div>
+        </div>
+        
+        <div class="endpoint">
+            <div class="method">POST /api/todos</div>
+            <div>Create a new todo</div>
+            <div><small>Body: { "title": "Task name", "completed": false }</small></div>
+        </div>
+        
+        <div class="endpoint">
+            <div class="method">PUT /api/todos/:id</div>
+            <div>Update an existing todo</div>
+            <div><small>Body: { "title": "Updated task", "completed": true }</small></div>
+        </div>
+        
+        <div class="endpoint">
+            <div class="method">DELETE /api/todos/:id</div>
+            <div>Delete a todo</div>
+        </div>
+    </div>
+
+    <p><strong>Test the API using:</strong></p>
+    <ul>
+        <li>Postman</li>
+        <li>cURL commands</li>
+        <li>Browser developer tools</li>
+    </ul>
+
+    <p>Data is stored in <code>todos.db</code> SQLite database.</p>
+</body>
+</html>
