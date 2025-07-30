@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript ToDo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .todo-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .todo-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .add-btn {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .add-btn:hover {
+            background: #0056b3;
+        }
+        
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        
+        .todo-checkbox {
+            margin-right: 15px;
+        }
+        
+        .todo-text {
+            flex: 1;
+            font-size: 16px;
+        }
+        
+        .todo-text.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        
+        .delete-btn {
+            padding: 5px 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .delete-btn:hover {
+            background: #c82333;
+        }
+        
+        .api-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        
+        .api-info h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .api-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .api-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TypeScript ToDo App</h1>
+        
+        <div class="todo-form">
+            <input type="text" class="todo-input" id="todoInput" placeholder="Neue Aufgabe eingeben...">
+            <button class="add-btn" onclick="addTodo()">Hinzufügen</button>
+        </div>
+        
+        <ul class="todo-list" id="todoList">
+            <!-- Todos werden hier dynamisch geladen -->
+        </ul>
+        
+        <div class="api-info">
+            <h3>API Information</h3>
+            <p>Die ToDo-API ist verfügbar unter:</p>
+            <ul>
+                <li><a href="/api/todos" class="api-link" target="_blank">GET /api/todos</a> - Alle Todos abrufen</li>
+                <li>POST /api/todos - Neues Todo hinzufügen</li>
+                <li>PUT /api/todos/:id - Todo aktualisieren</li>
+                <li>DELETE /api/todos/:id - Todo löschen</li>
+            </ul>
+            <p><strong>Status:</strong> Server läuft auf <a href="/" class="api-link">http://localhost:3000</a></p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

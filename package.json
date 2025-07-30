@@ -1,0 +1,25 @@
+{
+  "name": "copilotagenttest",
+  "version": "1.0.0",
+  "description": "Dies ist eine einfache ToDo-Webanwendung, geschrieben in TypeScript, ohne Frontend-Frameworks (nur HTML/CSS/JS), mit einem Backend auf Basis von Node.js und Express. Die Daten werden in einer SQLite3-Datenbank gespeichert.",
+  "main": "dist/src/server.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc && cp dist/public/main.js public/main.js",
+    "start": "node dist/src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
