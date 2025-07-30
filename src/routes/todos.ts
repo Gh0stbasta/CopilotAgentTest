@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import Database, { Todo } from '../db/database';
+import Database, { Todo } from '../../db/database';
 
 const router = Router();
 const db = new Database();

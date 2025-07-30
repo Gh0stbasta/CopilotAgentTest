@@ -1,74 +1,280 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App - TypeScript & SQLite</title>
+    <title>ToDo App - TypeScript & SQLite</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
         h1 {
-            color: #333;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
-        .api-info {
-            background-color: #f5f5f5;
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .todo-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 120px;
+        }
+
+        .form-group input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-group button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #2980b9;
+        }
+
+        .todo-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .todo-header {
+            padding: 20px 30px;
+            background-color: #34495e;
+            color: white;
+        }
+
+        .todo-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .todo-list {
+            min-height: 200px;
+            padding: 20px 0;
+        }
+
+        .no-todos {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            border-bottom: 1px solid #ecf0f1;
+            transition: background-color 0.2s ease;
+        }
+
+        .todo-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-item.completed {
+            background-color: #d5e8d4;
+        }
+
+        .todo-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .todo-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .todo-title {
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .todo-item.completed .todo-title {
+            text-decoration: line-through;
+            color: #7f8c8d;
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: opacity 0.2s ease;
+        }
+
+        .edit-btn {
+            background-color: #f39c12;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+
+        .edit-btn:hover, .delete-btn:hover {
+            opacity: 0.8;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
             padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
+            color: #7f8c8d;
+            font-size: 14px;
         }
-        .endpoint {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: white;
-            border-left: 4px solid #007bff;
-        }
-        .method {
-            font-weight: bold;
-            color: #007bff;
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .todo-form {
+                padding: 20px;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-group label {
+                min-width: auto;
+                margin-bottom: 8px;
+            }
+
+            .todo-item {
+                padding: 12px 20px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .todo-content {
+                justify-content: flex-start;
+            }
+
+            .todo-actions {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Todo App - REST API</h1>
-    <p>Welcome to the Todo App! The REST API is now available.</p>
-    
-    <div class="api-info">
-        <h2>Available API Endpoints:</h2>
-        
-        <div class="endpoint">
-            <div class="method">GET /api/todos</div>
-            <div>Retrieve all todos</div>
-        </div>
-        
-        <div class="endpoint">
-            <div class="method">POST /api/todos</div>
-            <div>Create a new todo</div>
-            <div><small>Body: { "title": "Task name", "completed": false }</small></div>
-        </div>
-        
-        <div class="endpoint">
-            <div class="method">PUT /api/todos/:id</div>
-            <div>Update an existing todo</div>
-            <div><small>Body: { "title": "Updated task", "completed": true }</small></div>
-        </div>
-        
-        <div class="endpoint">
-            <div class="method">DELETE /api/todos/:id</div>
-            <div>Delete a todo</div>
-        </div>
+    <div class="container">
+        <header>
+            <h1>📝 ToDo App</h1>
+            <p class="subtitle">Verwalten Sie Ihre Aufgaben mit TypeScript & SQLite</p>
+        </header>
+
+        <main>
+            <form id="todo-form" class="todo-form">
+                <div class="form-group">
+                    <label for="todo-input">Neue Aufgabe:</label>
+                    <input 
+                        type="text" 
+                        id="todo-input" 
+                        placeholder="Was möchten Sie erledigen?" 
+                        required
+                        autocomplete="off"
+                    >
+                    <button type="submit">Hinzufügen</button>
+                </div>
+            </form>
+
+            <div class="todo-container">
+                <div class="todo-header">
+                    <h2>Meine Aufgaben</h2>
+                </div>
+                <div id="todo-list" class="todo-list">
+                    <p class="no-todos">Lade Aufgaben...</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Daten werden in SQLite-Datenbank gespeichert • TypeScript Full-Stack App</p>
+        </footer>
     </div>
 
-    <p><strong>Test the API using:</strong></p>
-    <ul>
-        <li>Postman</li>
-        <li>cURL commands</li>
-        <li>Browser developer tools</li>
-    </ul>
-
-    <p>Data is stored in <code>todos.db</code> SQLite database.</p>
+    <script src="main.js"></script>
 </body>
 </html>
