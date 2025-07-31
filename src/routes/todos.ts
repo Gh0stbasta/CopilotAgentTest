@@ -5,14 +5,21 @@ const router = Router();
 
 // GET /api/todos - Get all todos
 router.get('/', (req: Request, res: Response) => {
-  // For initial setup, return static example JSON
-  const exampleTodos = [
-    { id: 1, title: 'Learn TypeScript', completed: false },
-    { id: 2, title: 'Build Todo App', completed: false },
-    { id: 3, title: 'Test the API', completed: true }
-  ];
-  
-  res.json(exampleTodos);
+  const sql = 'SELECT * FROM todos ORDER BY id';
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    
+    // Convert SQLite boolean (0/1) to JavaScript boolean
+    const todos = rows.map((row: any) => ({
+      id: row.id,
+      title: row.title,
+      completed: Boolean(row.completed)
+    }));
+    
+    res.json(todos);
+  });
 });
 
 // POST /api/todos - Create new todo
